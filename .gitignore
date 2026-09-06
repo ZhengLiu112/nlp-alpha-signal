@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+data/*.jsonl
+data/*.parquet
+data/lm_dictionary.csv
+results/*.csv
+results/figures/*
+!results/.gitkeep
+.DS_Store
+.ipynb_checkpoints/

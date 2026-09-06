@@ -1,0 +1,18 @@
+# Core — everything needed for the framework, calibration, and synthetic study
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+scikit-learn>=1.3
+
+# Testing
+pytest>=7.0
+
+# Real data (not needed for calibration or the synthetic demo)
+datasets>=2.14           # Hugging Face transcript loading
+yfinance>=0.2            # prices — note the delisting gap, see README
+pyarrow>=12.0            # parquet
+
+# Optional — the pipeline runs without these and says so
+sentence-transformers>=2.2   # real semantic embedder; falls back to HashingEmbedder
+transformers>=4.30           # FinBERT tone scorer; LM dictionary used otherwise
+matplotlib>=3.7

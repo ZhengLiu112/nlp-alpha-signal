@@ -1,0 +1,30 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.15, pytest-9.1.1, pluggy-1.6.0 -- /mnt/data/nlp-alpha-signal/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/data/nlp-alpha-signal
+collecting ... collected 41 items / 37 deselected / 4 selected
+
+tests/test_calibration.py::test_specificity_no_alpha_manufactured_from_noise PASSED [ 25%]
+tests/test_calibration.py::test_orthogonalization_removes_a_pure_confound PASSED [ 50%]
+tests/test_calibration.py::test_power_framework_finds_a_real_incremental_effect PASSED [ 75%]
+tests/test_calibration.py::test_small_sample_warning_is_raised PASSED    [100%]
+
+=============================== warnings summary ===============================
+tests/test_calibration.py:79
+  /mnt/data/nlp-alpha-signal/tests/test_calibration.py:79: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.slow
+
+tests/test_calibration.py:96
+  /mnt/data/nlp-alpha-signal/tests/test_calibration.py:96: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.slow
+
+tests/test_calibration.py:115
+  /mnt/data/nlp-alpha-signal/tests/test_calibration.py:115: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.slow
+
+tests/test_calibration.py:128
+  /mnt/data/nlp-alpha-signal/tests/test_calibration.py:128: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.slow
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========== 4 passed, 37 deselected, 4 warnings in 124.92s (0:02:04) ===========

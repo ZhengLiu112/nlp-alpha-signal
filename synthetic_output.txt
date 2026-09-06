@@ -1,0 +1,137 @@
+
+========================================================================
+NLP ALPHA SIGNAL STUDY   mode=synthetic
+========================================================================
+Planted effect: alpha=0.05, pead=0.1, confound=0.6
+
+========================================================================
+0.  EMBEDDER SANITY CHECK
+========================================================================
+  self_similarity          1.0000
+  related_similarity       0.2860
+  unrelated_similarity     0.0000
+  discrimination_gap       0.2860
+
+========================================================================
+1.  FEATURE CONSTRUCTION
+========================================================================
+[features] 3600/3600 calls usable (100.0%)
+[features] WARNING: using SEED word lists, not the full Loughran-McDonald dictionary. Download it into data/lm_dictionary.csv before reporting any result.
+  usable calls     : 3600/3600 (100.0%)
+  embedder         : hashing
+  LM dictionary    : seed
+  merged panel     : 3600 firm-quarters, 24 periods
+  SUE source       : eps_consensus
+
+  Component rank correlations (>0.8 means double counting):
+                 lm_tone_gap  evasiveness  hedging_density  analyst_tone
+    lm_tone_gap            1.000        0.116            0.574         0.483
+    evasiveness            0.116        1.000            0.232         0.164
+    hedging_density        0.574        0.232            1.000         0.708
+    analyst_tone           0.483        0.164            0.708         1.000
+
+========================================================================
+2.  ORTHOGONALIZATION  (Stage 1)
+========================================================================
+Stage 1: signal ~ controls    n=3600  R2=0.0726
+  controls used   : sue, announcement_return, log_mktcap, book_to_market, momentum_12_1
+  sector dummies  : True
+  period FE       : True
+
+  Control loadings on the text signal:
+               term    coef     se       t      p
+                  const  0.0390 0.3284  0.1186 0.9056
+                    sue -0.1703 0.0488 -3.4883 0.0005
+    announcement_return -2.7470 1.3393 -2.0512 0.0403
+             log_mktcap -0.0035 0.0135 -0.2626 0.7929
+         book_to_market  0.0659 0.0736  0.8948 0.3710
+          momentum_12_1 -0.0173 0.0797 -0.2170 0.8282
+
+========================================================================
+3.  HEADLINE  —  DOES THE SIGNAL SURVIVE ITS OWN CONTROLS?
+========================================================================
+ specification       signal  mean_ic  ic_se  t_stat_hac  p_value  hac_lags  n_periods  ic_hit_rate
+           raw  composite_z   0.0038 0.0134      0.2810   0.7813         2         24          0.5
+orthogonalized signal_resid   0.1651 0.0155     10.6236   0.0000         2         24          1.0
+
+  Reading:
+    Raw is weak, residual is strongly significant. Two channels in the raw
+    signal (confound and true alpha) are working against each other and
+    partly cancel. Once the confound is stripped, the true alpha shows through.
+    Genuine incremental information -- report the residual result.
+
+========================================================================
+4.  IC DECAY BY HORIZON
+========================================================================
+ horizon_days  mean_ic  t_stat  p_value  ic_ir  n_periods
+            5   0.1346  7.6882      0.0 1.4625         24
+           21   0.1651 10.6236      0.0 2.2522         24
+           63   0.1637 13.6214      0.0 2.3655         24
+
+========================================================================
+5.  QUINTILE PORTFOLIOS
+========================================================================
+ portfolio  mean_return  se_hac   t_stat  hac_lags    std  hit_rate  n_periods
+        q1      -0.0407  0.0038 -10.7993         2 0.0270    0.0417         24
+        q2      -0.0164  0.0073  -2.2333         2 0.0280    0.2917         24
+        q3       0.0039  0.0061   0.6495         2 0.0309    0.6250         24
+        q4       0.0351  0.0049   7.1363         2 0.0275    0.9167         24
+        q5       0.0300  0.0060   5.0375         2 0.0297    0.7917         24
+long_short       0.0707  0.0059  12.0139         2 0.0382    0.9583         24
+ long_only       0.0300  0.0060   5.0375         2 0.0297    0.7917         24
+
+  Long/short annualised: return=84.87%  vol=13.22%  Sharpe=6.42  maxDD=-1.32%
+
+========================================================================
+6.  TRANSACTION COST SENSITIVITY
+========================================================================
+ cost_bps_per_side  mean_return  t_stat  ann_return  sharpe  max_drawdown
+               0.0       0.0707 12.0139      0.8487  6.4172       -0.0132
+               5.0       0.0697 11.8440      0.8367  6.3264       -0.0142
+              10.0       0.0687 11.6742      0.8247  6.2357       -0.0152
+              20.0       0.0667 11.3344      0.8007  6.0542       -0.0172
+
+========================================================================
+7.  FAMA-FRENCH FACTOR ALPHA
+========================================================================
+  alpha = 0.06716  (t = 7.77, HAC lags = 2)   R2 = 0.182
+  loadings: mkt_rf=+0.178, smb=-0.264, hml=-0.144, rmw=+0.429, cma=-0.162, mom=+0.171
+
+========================================================================
+8.  SUBPERIOD STABILITY
+========================================================================
+       subperiod  n_periods  mean_return  t_stat  hit_rate
+ start to 2020Q1          8       0.0746  7.9389     1.000
+2020Q1 to 2022Q1          8       0.0556  8.4400     0.875
+   2022Q1 to end          8       0.0819  8.8194     1.000
+
+========================================================================
+9.  MULTIPLE TESTING ACROSS THE SPECIFICATION FAMILY
+========================================================================
+  18 specifications tested, BH critical p = 0.00232
+           signal  horizon  mean_ic   t_stat  p_value  n_periods  survives_bh
+      composite_z        5   0.0233   1.4755   0.1536         24        False
+      composite_z       21   0.0038   0.2810   0.7813         24        False
+      composite_z       63   0.0134   1.2875   0.2107         24        False
+     signal_resid        5   0.1346   7.6882   0.0000         24         True
+     signal_resid       21   0.1651  10.6236   0.0000         24         True
+     signal_resid       63   0.1637  13.6214   0.0000         24         True
+    z_lm_tone_gap        5  -0.0845  -7.4604   0.0000         24         True
+    z_lm_tone_gap       21  -0.1288 -10.5646   0.0000         24         True
+    z_lm_tone_gap       63  -0.1176 -10.3513   0.0000         24         True
+    z_evasiveness        5   0.0648   3.4231   0.0023         24         True
+    z_evasiveness       21   0.0723   4.2951   0.0003         24         True
+    z_evasiveness       63   0.0865   6.4883   0.0000         24         True
+z_hedging_density        5   0.1961  16.9674   0.0000         24         True
+z_hedging_density       21   0.2591  24.0059   0.0000         24         True
+z_hedging_density       63   0.2361  18.7749   0.0000         24         True
+   z_analyst_tone        5  -0.1424 -13.1928   0.0000         24         True
+   z_analyst_tone       21  -0.1985 -15.8271   0.0000         24         True
+   z_analyst_tone       63  -0.1852 -13.3756   0.0000         24         True
+
+  15/18 survive correction. Every specification run is listed above, not only the ones that worked.
+  -> /mnt/data/nlp-alpha-signal/results/all_variants_synthetic.csv
+
+========================================================================
+DONE
+========================================================================
